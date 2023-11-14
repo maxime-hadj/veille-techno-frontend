@@ -1,6 +1,6 @@
 <script setup>
 import { RouterView } from 'vue-router'
-import ToDoHeader from './components/toDoHeader.vue';
+import ToDoHeader from './components/TodoHeader.vue';
 
 
 </script>
