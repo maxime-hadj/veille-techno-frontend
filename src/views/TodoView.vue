@@ -2,6 +2,7 @@
 import{ uid } from 'uid';
 import TodoCreator from '../components/TodoCreator.vue';
 import { ref } from 'vue';
+import TodoItem from '../components/TodoItem.vue';
 const todoList = ref([]);
 const createTodo = (todo) =>{
   todoList.value.push({
@@ -17,6 +18,9 @@ const createTodo = (todo) =>{
   <main>
     <h1>Créer une liste de taches diabolique</h1>
     <TodoCreator @create-todo="createTodo" />
+    <ul>
+      <TodoItem/>
+    </ul>
   </main>
 </template>
 
