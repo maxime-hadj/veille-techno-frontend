@@ -8,7 +8,7 @@ import { RouterLink } from 'vue-router';
             <nav class="container">
                 <div class="branding">
                     <img src="../assets/logo.png" alt="chaotic evil mamen">
-                    <h1>Kanban for evil guy</h1>
+                    <h1>Evil Kanban</h1>
                 </div>
             <ul class="nav-routes">
                 <RouterLink to="/">Home</RouterLink>
