@@ -18,14 +18,14 @@ const createTodo = (todo) =>{
 
 <template>
   <main>
-    <h1>Créer une liste de taches diabolique</h1>
+    <h1>Créer une liste de tâches diaboliques.</h1>
     <TodoCreator @create-todo="createTodo" />
     <ul class="todo-list" v-if="todoList.length > 0">
       <TodoItem v-for="todo in todoList" :todo="todo" />
     </ul>
     <p class="todo-msg" v-else>
       <Icon icon="game-icons:evil-book" color="red" />
-      <span>Vous n'evez pas de liste de mefaits !!! Les forces du bien vont reprendre le dessus.</span>
+      <span>Votre liste de méfaits est vide !!! Les forces du bien vont reprendre le dessus.</span>
     </p>
   </main>
 </template>

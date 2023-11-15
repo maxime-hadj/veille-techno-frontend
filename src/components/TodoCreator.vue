@@ -19,7 +19,7 @@ const createTodo = () => {
     return;
   }
   todoState.invalid = true;
-  todoState.errMsg = "Le nom de liste ne peu pas etre vide."
+  todoState.errMsg = "Veuillez nommer votre tâche."
 
 };
 
