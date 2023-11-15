@@ -1,5 +1,6 @@
 <script setup>
 import { RouterView } from 'vue-router'
+import { Icon } from '@iconify/vue';
 import ToDoHeader from './components/TodoHeader.vue';
 
 
@@ -11,10 +12,10 @@ import ToDoHeader from './components/TodoHeader.vue';
 </template>
 
 <style lang="scss">
-@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;700&display=swap");
+@import url('https://fonts.googleapis.com/css?family=Oswald');
 
 * {
-  font-family: "Rubik", sans-serif;
+  font-family: 'Oswald';
   margin: 0;
   padding: 0;
   box-sizing: border-box;
