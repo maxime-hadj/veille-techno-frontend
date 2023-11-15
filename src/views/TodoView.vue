@@ -18,7 +18,7 @@ const createTodo = (todo) =>{
 
 <template>
   <main>
-    <h1>Créer une liste de tâches diaboliques.</h1>
+    <h1>Liste de tâches diaboliques</h1>
     <TodoCreator @create-todo="createTodo" />
     <ul class="todo-list" v-if="todoList.length > 0">
       <TodoItem v-for="todo in todoList" :todo="todo" />
