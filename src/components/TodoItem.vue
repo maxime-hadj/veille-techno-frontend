@@ -1,10 +1,7 @@
 <script setup>
 
 import { Icon } from '@iconify/vue';
-
 import{ uid } from 'uid';
-
-import { ref } from 'vue';
 
 const props = defineProps({
   todo: {
@@ -56,25 +53,27 @@ const deleteSubtask = ([parentIndex, subIndex]) => {
 
 <template>
 <li>
-    <input type="checkbox" :checked="todo.isCompleted" @input="$emit('toggle-complete', index)"/>
+  <input type="checkbox" :checked="todo.isCompleted" @input="$emit('toggle-complete', index)"/>
     <div class="todo">
-        <input v-if="todo.isEditing" type="text" :value="todo.todo" @input="$emit('update-todo', $event.target.value, index)">
-        <span v-else :class="{'completed-todo' : todo.isCompleted}">
-            {{ todo.todo }}
-        </span>
+      <input v-if="todo.isEditing" type="text" :value="todo.todo" @input="$emit('update-todo', $event.target.value, index)">
+      <span v-else :class="{'completed-todo' : todo.isCompleted}">
+        {{ todo.todo }}
+      </span>
     </div>
     <div class="todo-actions">
-        <Icon v-if="todo.isEditing" icon="icomoon-free:evil" color="red" class="icon" @click="$emit('edit-todo', index)"/>
-        <Icon v-else icon="game-icons:evil-hand" color="red" class="icon" @click="$emit('edit-todo', index)"/>
-        <Icon icon="game-icons:evil-tree" color="red" class="icon" @click="$emit('delete-todo', todo.id)"/>
+      <Icon v-if="todo.isEditing" icon="icomoon-free:evil" color="red" class="icon" @click="$emit('edit-todo', index)"/>
+      <Icon v-else icon="game-icons:evil-hand" color="red" class="icon" @click="$emit('edit-todo', index)"/>
+      <Icon icon="game-icons:evil-tree" color="red" class="icon" @click="$emit('delete-todo', todo.id)"/>
     </div>
 </li>
+
 <div v-if="todo.subtasks && todo.subtasks.length > 0">
-<ul>
+  <ul>
     <li v-for="(subtask, subIndex) in todo.subtasks" :key="subIndex">
-    <TodoItem :todo="subtask" :index="[index, subIndex]" @toggle-complete="toggleSubtaskComplete" @edit-todo="toggleSubtaskEdit" @update-todo="updateSubtask" @delete-todo="deleteSubtask" />
+      <TodoItem :todo="subtask" :index="[index, subIndex]" 
+      @toggle-complete="toggleSubtaskComplete" @edit-todo="toggleSubtaskEdit" @update-todo="updateSubtask" @delete-todo="deleteSubtask" />
     </li>
-</ul>
+  </ul>
 </div>
 <button @click="addSubtask">Add Subtask</button>
 
