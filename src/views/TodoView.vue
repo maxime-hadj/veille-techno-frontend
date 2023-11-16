@@ -12,6 +12,7 @@ const createTodo = (todo) =>{
     todo,
     isCompleted: null,
     isEditing: null,
+    subtasks: []
   });
 }
 

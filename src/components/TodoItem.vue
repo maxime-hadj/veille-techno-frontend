@@ -14,6 +14,33 @@ const props = defineProps({
 });
 defineEmits(["toggle-complete", "edit-todo", "update-todo", "delete-todo"]);
 
+
+const addSubtask = () => {
+  todoList.value[index].subtasks.push({
+    id: uid(),
+    todo: '',
+    isCompleted: false,
+    isEditing: false,
+    subtasks: [] // Add subtasks for subtasks if needed
+  });
+};
+
+const toggleSubtaskComplete = ([parentIndex, subIndex]) => {
+  todoList.value[parentIndex].subtasks[subIndex].isCompleted = !todoList.value[parentIndex].subtasks[subIndex].isCompleted;
+};
+
+const toggleSubtaskEdit = ([parentIndex, subIndex]) => {
+  todoList.value[parentIndex].subtasks[subIndex].isEditing = !todoList.value[parentIndex].subtasks[subIndex].isEditing;
+};
+
+const updateSubtask = (todoVal, [parentIndex, subIndex]) => {
+  todoList.value[parentIndex].subtasks[subIndex].todo = todoVal;
+};
+
+const deleteSubtask = ([parentIndex, subIndex]) => {
+  todoList.value[parentIndex].subtasks.splice(subIndex, 1);
+};
+
 </script>
 
 
@@ -32,6 +59,15 @@ defineEmits(["toggle-complete", "edit-todo", "update-todo", "delete-todo"]);
         <Icon icon="game-icons:evil-tree" color="red" class="icon" @click="$emit('delete-todo', todo.id)"/>
     </div>
 </li>
+<div v-if="todo.subtasks && todo.subtasks.length > 0">
+<ul>
+    <li v-for="(subtask, subIndex) in todo.subtasks" :key="subIndex">
+    <TodoItem :todo="subtask" :index="[index, subIndex]" @toggle-complete="toggleSubtaskComplete" @edit-todo="toggleSubtaskEdit" @update-todo="updateSubtask" @delete-todo="deleteSubtask" />
+    </li>
+</ul>
+</div>
+<button @click="addSubtask">Add Subtask</button>
+
 </template>
 
 
