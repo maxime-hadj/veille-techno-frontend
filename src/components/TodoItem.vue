@@ -2,43 +2,53 @@
 
 import { Icon } from '@iconify/vue';
 
+import{ uid } from 'uid';
+
+import { ref } from 'vue';
+
 const props = defineProps({
-    todo:{
-        type: Object,
-        required: true,
-    },
-    index:{
-        type: Number,
-        required: true,
-    }
+  todo: {
+    type: Object,
+    required: true,
+  },
+  index: {
+    type: Number,
+    required: true,
+  },
+  todoList: { // Define todoList as a prop
+    type: Array,
+    required: true,
+  },
 });
 defineEmits(["toggle-complete", "edit-todo", "update-todo", "delete-todo"]);
 
 
 const addSubtask = () => {
-  todoList.value[index].subtasks.push({
+  const currentIndex = props.index;
+  const currentTodoList = props.todoList;
+  currentTodoList[currentIndex].subtasks.push({
     id: uid(),
     todo: '',
     isCompleted: false,
     isEditing: false,
-    subtasks: [] // Add subtasks for subtasks if needed
+    subtasks: []
   });
 };
 
 const toggleSubtaskComplete = ([parentIndex, subIndex]) => {
-  todoList.value[parentIndex].subtasks[subIndex].isCompleted = !todoList.value[parentIndex].subtasks[subIndex].isCompleted;
+  todoList[parentIndex].subtasks[subIndex].isCompleted = !todoList[parentIndex].subtasks[subIndex].isCompleted;
 };
 
 const toggleSubtaskEdit = ([parentIndex, subIndex]) => {
-  todoList.value[parentIndex].subtasks[subIndex].isEditing = !todoList.value[parentIndex].subtasks[subIndex].isEditing;
+  todoList[parentIndex].subtasks[subIndex].isEditing = !todoList[parentIndex].subtasks[subIndex].isEditing;
 };
 
 const updateSubtask = (todoVal, [parentIndex, subIndex]) => {
-  todoList.value[parentIndex].subtasks[subIndex].todo = todoVal;
+  todoList[parentIndex].subtasks[subIndex].todo = todoVal;
 };
 
 const deleteSubtask = ([parentIndex, subIndex]) => {
-  todoList.value[parentIndex].subtasks.splice(subIndex, 1);
+  todoList[parentIndex].subtasks.splice(subIndex, 1);
 };
 
 </script>

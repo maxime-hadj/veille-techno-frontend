@@ -38,8 +38,18 @@ const deleteTodo = (todoId) => {
     <h1>Liste de tâches diaboliques</h1>
     <TodoCreator @create-todo="createTodo" />
     <ul class="todo-list" v-if="todoList.length > 0">
-      <TodoItem v-for="(todo , index) in todoList" :todo="todo" :index="index"  @toggle-complete="toggleTodoComplete" @edit-todo="toggleEditTodo" @update-todo="updateTodo" @delete-todo="deleteTodo"/>
-    </ul>
+      <TodoItem
+        v-for="(todo, index) in todoList"
+        :key="todo.id"
+        :todo="todo"
+        :index="index"
+        :todo-list="todoList" 
+        @toggle-complete="toggleTodoComplete"
+        @edit-todo="toggleEditTodo"
+        @update-todo="updateTodo"
+        @delete-todo="deleteTodo"
+    />    
+  </ul>
     <p class="todo-msg" v-else>
       <Icon icon="game-icons:evil-book" color="red" />
       <span>Votre liste de méfaits est vide !!! Les forces du bien vont reprendre le dessus.</span>
