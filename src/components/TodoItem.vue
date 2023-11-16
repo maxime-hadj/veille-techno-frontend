@@ -1,7 +1,7 @@
 <script setup>
-
 import { Icon } from '@iconify/vue';
-import{ uid } from 'uid';
+import { uid } from 'uid';
+import { ref } from 'vue';
 
 const props = defineProps({
   todo: {
@@ -19,37 +19,29 @@ const props = defineProps({
 });
 defineEmits(["toggle-complete", "edit-todo", "update-todo", "delete-todo"]);
 
+const addingSubtask = ref(false);
+const newSubtaskName = ref('');
 
-const addSubtask = () => {
-  const currentIndex = props.index;
-  const currentTodoList = props.todoList;
-  currentTodoList[currentIndex].subtasks.push({
-    id: uid(),
-    todo: '',
-    isCompleted: false,
-    isEditing: false,
-    subtasks: []
-  });
+const toggleAddingSubtask = () => {
+  addingSubtask.value = !addingSubtask.value;
+  newSubtaskName.value = ''; // Reset the input field when toggling
 };
 
-const toggleSubtaskComplete = ([parentIndex, subIndex]) => {
-  todoList[parentIndex].subtasks[subIndex].isCompleted = !todoList[parentIndex].subtasks[subIndex].isCompleted;
+const addSubtaskWithName = () => {
+  if (newSubtaskName.value.trim() !== '') {
+    const currentIndex = props.index;
+    const currentTodoList = props.todoList;
+    currentTodoList[currentIndex].subtasks.push({
+      id: uid(),
+      todo: newSubtaskName.value,
+      isCompleted: false,
+      isEditing: false,
+      subtasks: []
+    });
+    toggleAddingSubtask(); // Hide the input field after adding the subtask
+  }
 };
-
-const toggleSubtaskEdit = ([parentIndex, subIndex]) => {
-  todoList[parentIndex].subtasks[subIndex].isEditing = !todoList[parentIndex].subtasks[subIndex].isEditing;
-};
-
-const updateSubtask = (todoVal, [parentIndex, subIndex]) => {
-  todoList[parentIndex].subtasks[subIndex].todo = todoVal;
-};
-
-const deleteSubtask = ([parentIndex, subIndex]) => {
-  todoList[parentIndex].subtasks.splice(subIndex, 1);
-};
-
 </script>
-
 
 <template>
 <li>
@@ -75,8 +67,11 @@ const deleteSubtask = ([parentIndex, subIndex]) => {
     </li>
   </ul>
 </div>
-<button @click="addSubtask">Add Subtask</button>
-
+<div v-if="addingSubtask">
+    <input type="text" v-model="newSubtaskName" placeholder="Enter subtask name" />
+    <button @click="addSubtaskWithName">Add</button>
+  </div>
+  <button @click="toggleAddingSubtask">+ Add Subtask</button>
 </template>
 
 
