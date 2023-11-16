@@ -53,6 +53,7 @@ const addSubtaskWithName = () => {
       </span>
     </div>
     <div class="todo-actions">
+      <Icon icon="mdi:add-bold" color="red" class="icon" @click="toggleAddingSubtask" />
       <Icon v-if="todo.isEditing" icon="icomoon-free:evil" color="red" class="icon" @click="$emit('edit-todo', index)"/>
       <Icon v-else icon="game-icons:evil-hand" color="red" class="icon" @click="$emit('edit-todo', index)"/>
       <Icon icon="game-icons:evil-tree" color="red" class="icon" @click="$emit('delete-todo', todo.id)"/>
@@ -71,7 +72,7 @@ const addSubtaskWithName = () => {
     <input type="text" v-model="newSubtaskName" placeholder="Enter subtask name" />
     <button @click="addSubtaskWithName">Add</button>
   </div>
-  <button @click="toggleAddingSubtask">+ Add Subtask</button>
+  
 </template>
 
 
