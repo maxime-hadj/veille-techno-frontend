@@ -12,7 +12,7 @@ const props = defineProps({
     type: Number,
     required: true,
   },
-  todoList: { // Define todoList as a prop
+  todoList: {
     type: Array,
     required: true,
   },
@@ -24,7 +24,7 @@ const newSubtaskName = ref('');
 
 const toggleAddingSubtask = () => {
   addingSubtask.value = !addingSubtask.value;
-  newSubtaskName.value = ''; // Reset the input field when toggling
+  newSubtaskName.value = '';
 };
 
 const addSubtaskWithName = () => {
@@ -36,9 +36,10 @@ const addSubtaskWithName = () => {
       todo: newSubtaskName.value,
       isCompleted: false,
       isEditing: false,
+      description: '', // Add description property to subtask
       subtasks: []
     });
-    toggleAddingSubtask(); // Hide the input field after adding the subtask
+    toggleAddingSubtask();
   }
 };
 
@@ -49,14 +50,12 @@ const toggleSubtaskComplete = (subtaskIndex) => {
   subtask.isCompleted = !subtask.isCompleted;
 };
 
-
 const toggleSubtaskEdit = (subtaskIndex) => {
   const currentTodoList = props.todoList;
   const currentTodo = currentTodoList[props.index];
   const subtask = currentTodo.subtasks[subtaskIndex];
   subtask.isEditing = !subtask.isEditing;
 };
-
 
 const updateSubtask = (newTodo, subtaskIndex) => {
   const currentTodoList = props.todoList;
@@ -65,11 +64,34 @@ const updateSubtask = (newTodo, subtaskIndex) => {
   subtask.todo = newTodo;
 };
 
-
 const deleteSubtask = (subtaskIndex) => {
   const currentTodoList = props.todoList;
   const currentTodo = currentTodoList[props.index];
   currentTodo.subtasks.splice(subtaskIndex, 1);
+};
+
+// Handling subtask descriptions
+const addingDescriptionIndex = ref(-1);
+const newSubtaskDescription = ref('');
+
+const toggleAddingDescription = (subtaskIndex) => {
+  if (addingDescriptionIndex.value === subtaskIndex) {
+    addingDescriptionIndex.value = -1;
+  } else {
+    addingDescriptionIndex.value = subtaskIndex;
+    newSubtaskDescription.value = '';
+  }
+};
+
+const addSubtaskDescription = () => {
+  const currentTodoList = props.todoList;
+  const currentTodo = currentTodoList[props.index];
+  const subtask = currentTodo.subtasks[addingDescriptionIndex.value];
+
+  if (subtask && newSubtaskDescription.value.trim() !== '') {
+    subtask.description = newSubtaskDescription.value;
+    addingDescriptionIndex.value = -1;
+  }
 };
 </script>
 
@@ -77,8 +99,7 @@ const deleteSubtask = (subtaskIndex) => {
   <li>
     <input type="checkbox" :checked="todo.isCompleted" @input="$emit('toggle-complete', index)" />
     <div class="todo">
-      <input v-if="todo.isEditing" type="text" :value="todo.todo"
-        @input="$emit('update-todo', $event.target.value, index)">
+      <input v-if="todo.isEditing" type="text" :value="todo.todo" @input="$emit('update-todo', $event.target.value, index)">
       <span v-else :class="{ 'completed-todo': todo.isCompleted }">
         {{ todo.todo }}
       </span>
@@ -90,7 +111,7 @@ const deleteSubtask = (subtaskIndex) => {
       <Icon icon="game-icons:evil-tree" color="red" class="icon" @click="$emit('delete-todo', todo.id)" />
       <div v-if="addingSubtask">
         <input type="text" v-model="newSubtaskName" placeholder="" />
-        <button @click="addSubtaskWithName">Ajouter</button>
+        <button @click="addSubtaskWithName">Add</button>
       </div>
     </div>
   </li>
@@ -98,17 +119,21 @@ const deleteSubtask = (subtaskIndex) => {
   <div v-if="todo.subtasks && todo.subtasks.length > 0">
     <ul>
       <li v-for="(subtask, subIndex) in todo.subtasks" :key="subIndex">
-        <TodoItem
-        v-for="(todo, index) in todoList"
-        :key="todo.id"
-        :todo="subtask"
-        :index="subIndex"
-        :todo-list="todoList" 
-        @toggle-complete="toggleSubtaskComplete(subIndex)"
-        @edit-todo="toggleSubtaskEdit(subIndex)"
-        @update-todo="updateSubtask($event, subIndex)"
-        @delete-todo="deleteSubtask(subIndex)"
-        />   
+        <div class="subtask">
+          <input type="checkbox" :checked="subtask.isCompleted" @input="toggleSubtaskComplete(subIndex)" />
+          <span :class="{ 'completed-subtask': subtask.isCompleted }">
+            {{ subtask.todo }}
+          </span>
+          <!-- Add icon for adding description to subtasks -->
+          <Icon icon="mdi:text-box-plus-outline" color="red" class="icon" @click="toggleAddingDescription(subIndex)" />
+          <div v-if="addingDescriptionIndex === subIndex">
+            <!-- Input field for adding description -->
+            <input type="text" v-model="newSubtaskDescription" placeholder="Add description" />
+            <button @click="addSubtaskDescription">Add Description</button>
+          </div>
+          <Icon icon="game-icons:evil-tree" color="red" class="icon" @click="deleteSubtask(subIndex)" />
+        </div>
+        <div v-if="subtask.description">{{ subtask.description }}</div>
       </li>
     </ul>
   </div>
