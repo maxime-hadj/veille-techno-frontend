@@ -11,27 +11,27 @@ import { Icon } from '@iconify/vue';
 
     <h3> <Icon icon="game-icons:evil-book" color="red" /> Grocery List of Doom</h3>
 
-    <p>Even chaotic evil characters need to eat! Plan your visits to the local markets with the Grocery List of Doom. Ensure you have all the essential ingredients for your next diabolical feast.</p><br>
+    <p>Même les personnages maléfiques ont besoin de manger ! Planifiez vos visites aux marchés locaux avec la Liste d'épicerie de la Perdition. Assurez-vous d'avoir tous les ingrédients essentiels pour votre prochain festin diabolique.</p><br>
 
     <h3> <Icon icon="game-icons:evil-minion" color="red" /> Minion Management</h3>
 
-    <p>Keep track of your loyal minions and their assigned tasks. Whip them into shape and make sure they're ready for whatever nefarious deeds you have in store.</p><br>
+    <p>Suivez vos serviteurs loyaux et leurs tâches assignées. Faites-leur prendre forme et assurez-vous qu'ils soient prêts pour toutes les actions néfastes que vous avez prévues.</p><br>
 
     <h3> <Icon icon="game-icons:evil-moon" color="red" /> Villainous Calendar</h3>
 
-    <p>Stay on top of important dates, like when your sworn enemies are celebrating birthdays or when the next celestial alignment occurs for your dark rituals. Never miss an opportunity to sow chaos again.</p><br>
+    <p>Restez au courant des dates importantes, comme les anniversaires de vos ennemis jurés ou le prochain alignement céleste pour vos rituels sombres. Ne manquez plus jamais une opportunité de semer le chaos.</p><br>
 
     <h3> <Icon icon="game-icons:evil-wings" color="red" /> Treasure Hoard Tracker</h3>
 
-    <p>Manage your ill-gotten gains with the Treasure Hoard Tracker. Keep tabs on your stolen riches and artifacts, ensuring your hoard remains impressive and envy-inducing.</p><br>
+    <p>Gérez vos gains mal acquis avec le Suivi du Trésor Amassé. Gardez un œil sur vos richesses volées et artefacts, en vous assurant que votre butin reste de taille et suscite toutes les envies.</p><br>
 
     <h3> <Icon icon="game-icons:evil-eyes" color="red" /> Anonymous Chat for Henchmen</h3>
 
-    <p>Connect with your henchmen securely and anonymously. Discuss plans, issue orders, or just vent about the hardships of being chaotic. No paladins allowed!</p><br>
+    <p>Connectez-vous de manière sécurisée et anonyme avec vos laquais. Discutez des plans, donnez des ordres, ou bien exprimez les difficultés de votre condition chaotique. Aucun paladin ne sera autorisé à entrer!</p><br>
 
     <h3> <Icon icon="game-icons:evil-tower" color="red" /> Security</h3>
 
-    <p>Rest assured, your diabolical data is protected by the strongest enchantments and infernal firewalls. Our developers have consulted with the finest warlocks and wizards to ensure your plans remain your own.</p><br>
+    <p>Soyez assuré que vos données diaboliques sont protégées par les enchantements les plus puissants et des pare-feu infernaux. Nos développeurs ont consulté les meilleurs sorciers et magiciens pour garantir que vos plans restent les vôtres.</p><br>
 
     <p>Inscrivez-vous et embracez le chaos ! "Evil Tasks" - Parce que les méchants ont besoin d'un plan.</p>
   </div>
