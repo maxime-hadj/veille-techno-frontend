@@ -23,7 +23,7 @@ const props = defineProps({
   maxTextLength: {
     type: Number,
     default: 50,
-  }
+  },
 });
 
 defineEmits(["toggle-complete", "edit-todo", "update-todo", "delete-todo"]);
@@ -120,7 +120,7 @@ const addSubtaskDescription = () => {
       <Icon v-else icon="game-icons:evil-hand" color="red" class="icon" @click="$emit('edit-todo', index)" />
       <Icon icon="game-icons:evil-tree" color="red" class="icon" @click="$emit('delete-todo', todo.id)" />
       <div v-if="addingSubtask">
-        <input type="text" :minlength="5" :maxlength="15" v-model="newSubtaskName" placeholder="" />
+        <input type="text" :minlength="5" :maxlength="15" @keyup.enter="addSubtaskWithName" v-model="newSubtaskName" placeholder="" />
         <button @click="addSubtaskWithName">Add</button>
       </div>
     </div>
@@ -138,7 +138,7 @@ const addSubtaskDescription = () => {
           <Icon icon="mdi:text-box-plus-outline" color="red" class="icon" @click="toggleAddingDescription(subIndex)" />
           <div v-if="addingDescriptionIndex === subIndex">
             <!-- Input field for adding description -->
-            <input type="text" :minlength="5" :maxlength="100" v-model="newSubtaskDescription" placeholder="Add description" />
+            <input type="text" :minlength="5" :maxlength="100" @keyup.enter="addSubtaskDescription" v-model="newSubtaskDescription" placeholder="Add description" />
             <button @click="addSubtaskDescription">Add Description</button>
           </div>
           <Icon icon="game-icons:evil-tree" color="red" class="icon" @click="deleteSubtask(subIndex)" />
