@@ -41,6 +41,36 @@ const addSubtaskWithName = () => {
     toggleAddingSubtask(); // Hide the input field after adding the subtask
   }
 };
+
+const toggleSubtaskComplete = (subtaskIndex) => {
+  const currentTodoList = props.todoList;
+  const currentTodo = currentTodoList[props.index];
+  const subtask = currentTodo.subtasks[subtaskIndex];
+  subtask.isCompleted = !subtask.isCompleted;
+};
+
+
+const toggleSubtaskEdit = (subtaskIndex) => {
+  const currentTodoList = props.todoList;
+  const currentTodo = currentTodoList[props.index];
+  const subtask = currentTodo.subtasks[subtaskIndex];
+  subtask.isEditing = !subtask.isEditing;
+};
+
+
+const updateSubtask = (newTodo, subtaskIndex) => {
+  const currentTodoList = props.todoList;
+  const currentTodo = currentTodoList[props.index];
+  const subtask = currentTodo.subtasks[subtaskIndex];
+  subtask.todo = newTodo;
+};
+
+
+const deleteSubtask = (subtaskIndex) => {
+  const currentTodoList = props.todoList;
+  const currentTodo = currentTodoList[props.index];
+  currentTodo.subtasks.splice(subtaskIndex, 1);
+};
 </script>
 
 <template>
@@ -58,20 +88,29 @@ const addSubtaskWithName = () => {
       <Icon v-if="todo.isEditing" icon="icomoon-free:evil" color="red" class="icon" @click="$emit('edit-todo', index)" />
       <Icon v-else icon="game-icons:evil-hand" color="red" class="icon" @click="$emit('edit-todo', index)" />
       <Icon icon="game-icons:evil-tree" color="red" class="icon" @click="$emit('delete-todo', todo.id)" />
+      <div v-if="addingSubtask">
+        <input type="text" v-model="newSubtaskName" placeholder="" />
+        <button @click="addSubtaskWithName">Ajouter</button>
+      </div>
     </div>
   </li>
 
   <div v-if="todo.subtasks && todo.subtasks.length > 0">
     <ul>
       <li v-for="(subtask, subIndex) in todo.subtasks" :key="subIndex">
-        <TodoItem :todo="subtask" :index="[index, subIndex]" @toggle-complete="toggleSubtaskComplete"
-          @edit-todo="toggleSubtaskEdit" @update-todo="updateSubtask" @delete-todo="deleteSubtask" />
+        <TodoItem
+        v-for="(todo, index) in todoList"
+        :key="todo.id"
+        :todo="subtask"
+        :index="subIndex"
+        :todo-list="todoList" 
+        @toggle-complete="toggleSubtaskComplete(subIndex)"
+        @edit-todo="toggleSubtaskEdit(subIndex)"
+        @update-todo="updateSubtask($event, subIndex)"
+        @delete-todo="deleteSubtask(subIndex)"
+        />   
       </li>
     </ul>
-  </div>
-  <div v-if="addingSubtask">
-    <input type="text" v-model="newSubtaskName" placeholder="" />
-    <button @click="addSubtaskWithName">Ajouter</button>
   </div>
 </template>
 
