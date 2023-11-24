@@ -16,7 +16,16 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  minTextLength: {
+    type: Number,
+    default: 0,
+  },
+  maxTextLength: {
+    type: Number,
+    default: 50,
+  }
 });
+
 defineEmits(["toggle-complete", "edit-todo", "update-todo", "delete-todo"]);
 
 const addingSubtask = ref(false);
@@ -93,13 +102,14 @@ const addSubtaskDescription = () => {
     addingDescriptionIndex.value = -1;
   }
 };
+
 </script>
 
 <template>
   <li>
     <input type="checkbox" :checked="todo.isCompleted" @input="$emit('toggle-complete', index)" />
     <div class="todo">
-      <input v-if="todo.isEditing" type="text" :value="todo.todo" @input="$emit('update-todo', $event.target.value, index)">
+      <input v-if="todo.isEditing" type="text" :minlength="5" :maxlength="15" :value="todo.todo" @input="$emit('update-todo', $event.target.value, index)">
       <span v-else :class="{ 'completed-todo': todo.isCompleted }">
         {{ todo.todo }}
       </span>
@@ -110,7 +120,7 @@ const addSubtaskDescription = () => {
       <Icon v-else icon="game-icons:evil-hand" color="red" class="icon" @click="$emit('edit-todo', index)" />
       <Icon icon="game-icons:evil-tree" color="red" class="icon" @click="$emit('delete-todo', todo.id)" />
       <div v-if="addingSubtask">
-        <input type="text" v-model="newSubtaskName" placeholder="" />
+        <input type="text" :minlength="5" :maxlength="15" v-model="newSubtaskName" placeholder="" />
         <button @click="addSubtaskWithName">Add</button>
       </div>
     </div>
@@ -128,7 +138,7 @@ const addSubtaskDescription = () => {
           <Icon icon="mdi:text-box-plus-outline" color="red" class="icon" @click="toggleAddingDescription(subIndex)" />
           <div v-if="addingDescriptionIndex === subIndex">
             <!-- Input field for adding description -->
-            <input type="text" v-model="newSubtaskDescription" placeholder="Add description" />
+            <input type="text" :minlength="5" :maxlength="100" v-model="newSubtaskDescription" placeholder="Add description" />
             <button @click="addSubtaskDescription">Add Description</button>
           </div>
           <Icon icon="game-icons:evil-tree" color="red" class="icon" @click="deleteSubtask(subIndex)" />
